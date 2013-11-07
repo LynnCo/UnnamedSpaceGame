@@ -5,14 +5,11 @@
 
 #call galaxymap.get.[quality] for all your needs
 
-#imports
 import random
 import lynn_custom as LC
 import math
 
-#classes: 
-#galaxy, element, star, system, events, constellation,
-
+#[classes]
 #galaxy_gen: map size, initializes other classes
 #element_gen: very carefully tuned element distributions
 #star_gen: creates stars

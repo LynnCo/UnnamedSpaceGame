@@ -10,7 +10,6 @@
 #oscillator
 #significant figures rounder
 
-#import
 import math
 import random
 import time

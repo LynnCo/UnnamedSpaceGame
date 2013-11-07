@@ -1,4 +1,4 @@
 #pathfinder.py
-#import as path
+#import as pathfinder
 
 #plots your path through space

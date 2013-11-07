@@ -19,9 +19,6 @@ Generate static galaxy elements
     intro.decisions
 Get some stats, create a ship, choose where you're headed
 
-    ship_state.create
-Initialize ship attributes
-
 ----------
 
 **Travel Rest Loop, runs until you reach your destination**
