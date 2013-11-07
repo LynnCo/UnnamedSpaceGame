@@ -26,24 +26,33 @@ class location (object):
         location.jump_history.append((xn,yn))
         
 #your stuff
-class equipment (object):
+class subsystem (object):
     '''what your ship is made of'''
+
+    #crew = the type and how many people operate this subsystem. (cmd,eng,gen) 0->
+    #integrity = physical integrity. is this thing about to break apart. 100 -> 0
+    #complexity =  more complex systems may fail more easily. 1 ->
+    #effectiveness = how well this component is functioning. 0 ->
+    #for the following [] = "optional"
+    #power_out = generators,[solar_array]
+    #power_in = life_support,quarters,bridge,[FTL],[sublight],[AM_array],[LR_scanner],[PD_weapons],[ship_weapons]
+    #operating profiles:
+    #FTL: 
+    #subspce:
+    #emergency: 
 
     #core
     class generators (object):
+        '''provides your power'''
         crew = dict()
         crew["type"] = "eng"
         crew["min"] = 0
         crew["max"] = 1
-        #structural integrity
         integrity = 100
-        power = 0
-        #complex systems might just fail randomly
         complexity = 1
+        power_out = 0
     class life_support (object):
-        '''
-        food, medical, air
-        '''
+        '''food, medical, air'''
         crew = dict()
         crew["type"] = "gen"
         crew["min"] = 0
@@ -51,10 +60,11 @@ class equipment (object):
         integrity = 100
         effectiveness = 0
         complexity = 1
-        power_draw = 0
+        power_in = 0
     class quarters (object):
+        '''crew hangout'''
         effectiveness = 0
-        power_draw = 0
+        power_in = 0
     class bridge (object):
         '''
         the bridge controls many of the more complex
@@ -67,7 +77,7 @@ class equipment (object):
         crew["max"] = 1
         effectiveness = 0
         complexity = 1
-        power_draw = 0
+        power_in = 0
     class FTL (object):
         '''faster than light drive. uses AntiMatter to operate'''
         crew = dict()
@@ -80,7 +90,7 @@ class equipment (object):
         #mass/AU
         fuel_factor = 1
         complexity = 1
-        power_draw = 0
+        power_in = 0
     class sublight (object):
         '''sublight drive. burns gases to operate'''
         crew = dict()
@@ -89,19 +99,34 @@ class equipment (object):
         crew["max"] = 1
         integrity = 100
         speed = 1
+        fuel_factor = 1
         efficiency = 1
         complexity = 1
-        power_draw = 0
+        power_in = 0
         
     #acquisiton
+    class LR_scanner (object):
+        '''scan distance systems'''
+        crew = dict()
+        crew["type"] = "eng"
+        crew["min"] = 0
+        crew["max"] = 1
+        effectiveness = 0
+        power_in = 0
+    class probe_scanner (object):
+        '''for scanning large nearby bodies'''
+        count = 0
+        effectiveness = 0
     class AM_array (object):
         '''refill your FTL drive'''
         effectiveness = 0
-        power_draw = 0
+        power_in = 0
     class solar_array (object):
         '''charge up on the sun'''
         effectiveness = 0
+        power_out = 0
     class miner_shuttle (object):
+        '''collects rocks'''
         crew = dict()
         crew["type"] = "gen"
         crew["min"] = 0
@@ -109,10 +134,19 @@ class equipment (object):
         count = 0
         effectiveness = 0
     class gas_probe (object):
+        '''collects gas'''
         count = 0
         effectiveness = 0
     
     #QOL
+    class PD_weapons (object):
+        '''defense against small things'''
+        crew = dict()
+        crew["type"] = "gen"
+        crew["min"] = 0
+        crew["max"] = 1
+        effectiveness = 0
+        power_in = 0
     class ship_weapons (object):
         '''defense against large things'''
         crew = dict()
@@ -121,24 +155,7 @@ class equipment (object):
         crew["max"] = 1
         intregity = 100
         effectiveness = 0
-    class PD_weapons (object):
-        '''defense against small things'''
-        crew = dict()
-        crew["type"] = "gen"
-        crew["min"] = 0
-        crew["max"] = 1
-        effectiveness = 0
-    class LR_scanner (object):
-        '''scan distance systems'''
-        crew = dict()
-        crew["type"] = "eng"
-        crew["min"] = 0
-        crew["max"] = 1
-        effectiveness = 0
-    class probe_scanner (object):
-        '''for scanning large nearby bodies'''
-        count = 0
-        effectiveness = 0
+        power_in = 0
     class armor (object):
         '''physical armor'''
         integrity = 0
@@ -156,8 +173,12 @@ class equipment (object):
         size = 0
         repair_rate = 0
         integrity = 100
-        
+        #packing factor = how efficiently a thing is stored in your cargo. 0.1 -> 5
         p_f = dict()
+        p_f["biomass"] = 1
+        p_f["materials"] = 1
+        p_f["AM"] = 1
+        p_f["goods"] = 1
         
 
 class supplies (object):
