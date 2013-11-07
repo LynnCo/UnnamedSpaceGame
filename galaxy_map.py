@@ -19,10 +19,13 @@ import math
 #system_gen: defines system qualities
 #events_gen: defines system events
 #constellation_gen: defines constellation qualities
+#developement: late term qualities
 #get: a collection of any variable external functions would need
 
 #TODO
 #star names
+#developement
+#get
 
 #galaxy control
 class galaxy_gen (object):

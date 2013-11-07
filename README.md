@@ -1,30 +1,62 @@
 UnnamedSpaceGame
 ================
 
-Procedurally generated space game
-Built from the ground up my me
-Estimated completion date: 3/2014
+Procedural generation based space game, built from the ground up by mi, Lynn
 
-# Overview #
+ETA: 3/2014
 
-## Journey_Init ##
-- [ ] Intro_Story
-- [ ] Galaxy_Gen
-- [ ] Choose_Colony_Site
-- [ ] Construct_Ship
-- [ ] Ship_State
+Task Flow
+----------
 
-## Travel_Rest_Loop ##
-    Pathfinder
-    Move_to
-    Travel_Events
-    Ship_State
+**Journey Init, runs once at the beggining**
 
-##Real_Space_Loop ##
-    System_Events
-    Action_List
-    Ship_State
+    intro.story
+Learn about what's going on
+
+    galaxy_gen
+Generate static galaxy elements
+
+    intro.decisions
+Get some stats, create a ship, choose where you're headed
+
+    ship_state.create
+Initialize ship attributes
+
+----------
+
+**Travel Rest Loop, runs until you reach your destination**
+
+    pathfinder
+Choose your next destination
+
+    travel_events
+Pulse travel events
+
+    ship_state
+Update ship state (at new location)
+
+----------
+
+**Real Space Loop, runs every time you drop out of subspace**
+
+    action_list
+Create available action list
+
+    system_events
+Bind events (on action or on arrival)
+
+    system_sverview
+Write up the system description
+
+    ship_state
+Allow user choices, update ship state
         
-## Journey_End ##
-    Ship_State
-    End_Story
+----------
+
+**Journey End, runs when you get to destination**
+
+    ship_state.history
+Pull the ship state history
+
+    end_story
+Write the ending story

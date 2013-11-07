@@ -3,6 +3,13 @@
 
 #a collection of all my personal functions
 
+#todo:
+#slanted split
+#better averaging and cluster functions
+#standard deviation
+#oscillator
+#significant figures rounder
+
 #import
 import math
 import random
