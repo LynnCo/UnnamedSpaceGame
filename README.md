@@ -39,17 +39,20 @@ Update ship state (at new location)
 
 **Real Space Loop, runs every time you drop out of subspace**
 
-    action_list
+    action.create
 Create available action list
 
     system_events
 Bind events (on action or on arrival)
 
-    system_sverview
+    system_overview
 Write up the system description
 
+    action.do
+Allow user to choose actions, runs several times
+
     ship_state
-Allow user choices, update ship state
+Updates ship state
         
 ----------
 
