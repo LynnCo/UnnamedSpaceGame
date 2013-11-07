@@ -5,6 +5,3 @@
 
 import ship_state as ship
 import pathfinder
-
-ship.crew.bob = "hats"
-print(ship.equipment.gen.output)

@@ -130,6 +130,7 @@ class equipment (object):
         effectiveness = 0
     class LR_scanner (object):
         '''scan distance systems'''
+        crew = dict()
         crew["type"] = "eng"
         crew["min"] = 0
         crew["max"] = 1
