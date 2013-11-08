@@ -1,10 +1,13 @@
 #ship_state.py
 #import as ship
 
+#a collection of the numbers about the ship
+#also used to write in new ship state numbers
+
 class hull (object):
     '''general hull strength'''
 
-    #0 to 100. <0 and you're dead
+    #physical state. 0 -> 100. 0 = destroyed
     integrity = 100
     
     #change integrity for different types of damage
@@ -32,14 +35,11 @@ class subsystem (object):
     #crew = the type and how many people operate this subsystem. (cmd,eng,gen) 0->
     #integrity = physical integrity. is this thing about to break apart. 100 -> 0
     #complexity =  more complex systems may fail more easily. 1 ->
-    #effectiveness = how well this component is functioning. 0 ->
-    #for the following [] = "optional"
-    #power_out = generators,[solar_array]
-    #power_in = life_support,quarters,bridge,[FTL],[sublight],[AM_array],[LR_scanner],[PD_weapons],[ship_weapons]
-    #operating profiles:
-    #FTL: 
-    #subspce:
-    #emergency: 
+    #effectiveness = how well this component is functioning. 0 -> 1
+    #power_out = generators,solar_array
+    #always on: life_support,quarters,bridge
+    #FTL: FTL 
+    #subspace: AM_array,sublight,PD_weapons,ship_weapons 
 
     #core
     class generators (object):
@@ -89,6 +89,9 @@ class subsystem (object):
         speed = 1
         #mass/AU
         fuel_factor = 1
+        #AU
+        jump_accurary = 1
+        effectiveness = 1
         complexity = 1
         power_in = 0
     class sublight (object):
@@ -100,7 +103,7 @@ class subsystem (object):
         integrity = 100
         speed = 1
         fuel_factor = 1
-        efficiency = 1
+        effectiveness = 1
         complexity = 1
         power_in = 0
         
@@ -112,7 +115,6 @@ class subsystem (object):
         crew["min"] = 0
         crew["max"] = 1
         effectiveness = 0
-        power_in = 0
     class probe_scanner (object):
         '''for scanning large nearby bodies'''
         count = 0
