@@ -142,13 +142,30 @@ def dist_2d (x1,y1,x2,y2):
     dy = y2 - y1
     return math.hypot(dx,dy)
 
-def linear_rescale (a1,a2,b1,b2,x):
-    '''scales a value according to a linear function'''
-    m = (b1-b2)/(a1-a2)
-    b = b1 - m*a1
+def linear_rescale (x1,x2,y1,y2,x):
+    '''
+    scales a value according to a linear function
+    input: x1,x2,y1,y2
+    '''
+    m = (y1-y2)/(x1-x2)
+    b = y1 - m*x1
     y = m*x+b
     return y
 
+def linear_eq (x1,y1,x2,y2):
+    '''gets a linear equation from a set of x,y points'''
+    m = (y1-y2)/(x1-x2)
+    b = y1 - m*x1
+    return (m,b)
+
+def quadratic_rescale():
+    pass
+    
+def perpendicular_eq (m,x,y):
+    p_m = -(1/m)
+    p_b = y-p_m*x
+    return (p_m,p_b)
+    
 def find_center (stars):
     point = [0,0]
     x_list = list()
@@ -293,10 +310,6 @@ class clusters (object):
             self.tags[x,y] = str()
         self.limit = len(map)
         self.splitter(map)
-
-    #where you get your output from
-    @property
-    def get_tags (self): return self.tags
         
     #NEED TO MAKE A DIAGONAL SPLITTER
         
@@ -396,6 +409,30 @@ class clusters (object):
 
 
 
+def to_base(num,base):
+    #dividend
+    d = list()
+    d.append(num)
+    #remainder
+    r = list()
+    conv = list()
+    string = str()
+    letters = {10:"A",11:"B",12:"C",13:"D",14:"E",15:"F",16:"G",17:"H",18:"I",19:"J"}
+    while (d[-1]>=base):
+        r.append(d[-1]%base)
+        d.append(d[-1]//base)
+    if d[-1]>=10:
+        conv.append(letters[d[-1]])
+    else:
+        conv.append(d[-1])
+    for var in range(len(r)):
+        if r[-1]>=10:
+            conv.append(letters[r.pop()])
+        else:
+            conv.append(r.pop())
+    for entry in conv:
+        string += str(entry)
+    return string
 # def cycle (self):
     # if adv.osc==1: adv.osc=0
     # if adv.osc==0: adv.osc=1     

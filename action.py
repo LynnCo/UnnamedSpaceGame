@@ -6,7 +6,7 @@
 #a single class that is instanced on entry into the system
 #(from travel_rest)
 
-import galaxy_map as gmap
+import galaxy as gal
 import ship_state as ship
 
 class do (object):

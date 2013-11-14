@@ -11,7 +11,7 @@
 #an event, if one occurs
 
 import ship_state as ship
-import galaxy_map as gmap
+import galaxy as gal
 
 class pulse (object):
     '''

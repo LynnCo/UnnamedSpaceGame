@@ -37,7 +37,7 @@ class subsystem (object):
     #complexity =  more complex systems may fail more easily. 1 ->
     #effectiveness = how well this component is functioning. 0 -> 1
     #power_out = generators,solar_array
-    #always on: life_support,quarters,bridge
+    #always on: life_support,colony_module,bridge
     #FTL: FTL 
     #subspace: AM_array,sublight,PD_weapons,ship_weapons 
 
@@ -61,10 +61,14 @@ class subsystem (object):
         effectiveness = 0
         complexity = 1
         power_in = 0
-    class quarters (object):
-        '''crew hangout'''
-        effectiveness = 0
+    class colony_module (object):
+        '''mini habitat, ready to be translated to a new world'''
+        integrity = 0
         power_in = 0
+        crew = dict()
+        crew["type"] = "gen"
+        crew["min"] = 0
+        crew["max"] = 1
     class bridge (object):
         '''
         the bridge controls many of the more complex
@@ -84,16 +88,19 @@ class subsystem (object):
         crew["type"] = "eng"
         crew["min"] = 0
         crew["max"] = 1
-        integrity = 100
-        #AU/day
+        #ly/day
         speed = 1
-        #mass/AU
+        #mass/ly
         fuel_factor = 1
-        #AU
-        jump_accurary = 1
+        #optimal distance 9 -> 12ly
+        o_dist = 10
+        #base inaccuracy 1 -> 2y
+        b_iacc = 1.5
+        integrity = 100
         effectiveness = 1
         complexity = 1
         power_in = 0
+
     class sublight (object):
         '''sublight drive. burns gases to operate'''
         crew = dict()
@@ -101,8 +108,12 @@ class subsystem (object):
         crew["min"] = 0
         crew["max"] = 1
         integrity = 100
+        
+        #AU/day
         speed = 1
+        #mass/AU
         fuel_factor = 1
+        
         effectiveness = 1
         complexity = 1
         power_in = 0

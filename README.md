@@ -13,7 +13,7 @@ Task Flow
     intro.story
 Learn about what's going on
 
-    galaxy_gen
+    galaxy.generate
 Generate static galaxy elements
 
     intro.decisions
@@ -21,7 +21,7 @@ Get some stats, create a ship, choose where you're headed
 
 ----------
 
-**Travel Rest Loop, runs until you reach your destination**
+**Main_Sequence, runs until you reach your destination**
 
     pathfinder
 Choose your next destination
