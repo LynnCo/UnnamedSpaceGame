@@ -48,9 +48,9 @@ class element_gen (object):
         #generates eg.normals
         #distribution: 30 +- 10
         for (x,y) in galaxy_gen.map:
-            if eg.lights[x,y]>eg.l_ave-eg.l_dev*1:
+            if eg.lights[x,y]>eg.l_ave-eg.l_dev:
                 eg.normals[x,y] = random.gauss(85,22)
-        eg.normals = LC.aggregrate(2,eg.normals,3,3)
+        eg.normals = LC.aggregrate(eg.normals,5,3)
         for (x,y) in eg.normals.keys():
             if eg.normals[x,y]<0: eg.normals[x,y]=0
         eg.n_ave = LC.average(eg.normals.values())
@@ -58,10 +58,10 @@ class element_gen (object):
         #generates eg.heavies
         #distrition: 20 +- 5
         for (x,y) in eg.normals.keys():
-            if eg.normals[x,y]>eg.n_ave-eg.n_dev*0.75:
+            if eg.normals[x,y]>eg.n_ave-eg.n_dev:
                 eg.heavies[x,y] = (2*eg.normals[x,y] + eg.lights[x,y])*0.45
         #clustering
-        eg.heavies = LC.aggregrate(3,eg.heavies,3,3)
+        #eg.heavies = LC.aggregrate(3,eg.heavies,3,3)
         for (x,y) in eg.heavies.keys():
             if eg.heavies[x,y]<0: eg.heavies[x,y]=0
         eg.h_ave = LC.average(eg.heavies.values())
@@ -69,10 +69,10 @@ class element_gen (object):
         #generates eg.exotics
         #distribution: 2.5 +- 1.5
         for (x,y) in eg.heavies.keys():
-            if eg.heavies[x,y]>eg.h_ave-eg.h_dev*0.5:
+            if eg.heavies[x,y]>eg.h_ave-eg.h_dev:
                 eg.exotics[x,y] = random.gauss(5,1)
         #drop off significantly at the edge
-        eg.exotics = LC.aggregrate(4,eg.exotics,10,10)
+        #eg.exotics = LC.aggregrate(4,eg.exotics,10,10)
         for (x,y) in eg.exotics.keys():
             if eg.exotics[x,y]<0: eg.exotics[x,y]=0
         eg.e_ave = LC.average(eg.exotics.values())
@@ -492,11 +492,10 @@ class constellation_gen (object):
 class cosmetic (object):
     star_type = dict()
     star_name = dict()
-    planet_types = dict()
     def __init__ (self):
         self.star_typer()
         self.star_namer()
-        self.planet_namer()
+        #self.planet_namer()
     def star_typer (self):
         cgc = constellation_gen.center
         cgcn = constellation_gen.core_name
@@ -540,8 +539,6 @@ class cosmetic (object):
             elif len(name)==4: name += "00"
             elif len(name)==3: name += "000"
             cosmetic.star_name[x,y] = name
-    def planet_namer (self):
-        pass
 #late term things
 class developement (object):
     def __init__(self):

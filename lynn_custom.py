@@ -242,44 +242,36 @@ def aggregrate_v2 (map,width,height,mod_c=5):
                         except KeyError: 
                             pass  
     return map1
-  
-def aggregrate (d,map,mod_c=5,mod_e=5):
-    '''
-    moves the values into "clumps"
-    also decreases values near the edge of the grid
-    
-    inputs: distance, dict[x,y] = value, clumping, edging
-    outputs: same dict with new values
-    
-    [Optional]
-    mod_c influences clumping (min 1)
-    mod_e influences edge decrease
-    '''
+
+def aggregrate (map,r=5,steps=3,mod=0.5):
     t_map = map.copy()
-    #l(onely) for points near edge
-    l = (d+1)**2
-    #c(rowded) for points that are not
-    c = (2*d+1)**2
-    box = list()
-    for h in range(-d,d):
-        for v in range(-d,d):
-            box.append((h,v)) 
-    for (x,y) in map.keys():
-        local = list()
-        for (h,v) in box:               
-            try:
-                local.append(map[x+h,y+v])
-            except KeyError:
-                pass                        
-        if mod_c:
-            percentile = get_percentile(local,map[x,y])
-            cluster = linear_rescale(0,1,1/mod_c,1*mod_c/3,percentile)
-            t_map[x,y] *= cluster
-        if mod_e:    
-            edge = linear_rescale(l,c,1/mod_e,1,len(local))
-            t_map[x,y] *= edge
-        local.clear
-    return t_map    
+    xrs = set()
+    for x in range(r):
+        for y in range(r):
+            if math.hypot(x,y)<r:
+                xrs.add((x,y))
+                xrs.add((-x,y))
+                xrs.add((x,-y))
+                xrs.add((-x,-y))
+    for i in range(steps):
+        for (x,y) in map.keys():
+            pil = list()
+            for (dx,dy) in xrs:
+                try: map[(x+dx,y+dy)];pil.append((x+dx,y+dy))
+                except KeyError: pass
+            pl = len(pil)
+            s1 = 0
+            for (dx,dy) in pil:
+                s1 += map[(dx,dy)]
+            s2 = 0
+            for (dx,dy) in pil:
+                a = map[(dx,dy)]*pl/s1
+                b = 1/(1+math.e**(-3*a+3))
+                s2 += map[(dx,dy)]*b
+            t_map[(x,y)] = map[(x,y)]**2*pl/s2
+        map = t_map.copy()
+        write_to_chart(map,200,200,"agg"+str(i+1)+".csv")
+    return map
     
    
 
