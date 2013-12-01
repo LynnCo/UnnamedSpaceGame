@@ -141,6 +141,16 @@ def dist_2d (x1,y1,x2,y2):
     dx = x2 - x1
     dy = y2 - y1
     return math.hypot(dx,dy)
+    
+def rampfunc (x1,x2,y1,y2,x):
+    '''applies a ramp function'''
+    if x1<=inp<=x2:
+        m = (y1-y2)/(x1-x2)
+        b = y1 - m*x1
+        y = m*x+b
+        return y
+    elif x1>x: return y1
+    elif x<x2: return y2
 
 def linear_rescale (x1,x2,y1,y2,x):
     '''
@@ -211,39 +221,8 @@ def sqr_av (r,map,mod=0.5):
         t_map[x,y] = map[x,y] + diff
         local.clear
     return t_map
-    
-def aggregrate_v2 (map,width,height,mod_c=5):
-    '''
-    less accurate, but x10 faster
-    '''
-    box_size = 5
-    int1_max = math.ceil(width/box_size)
-    int2_max = math.ceil(height/box_size)
-    
-    map1 = map.copy()
 
-    for int1 in range(1,int1_max+1):
-        for int2 in range(1,int2_max+1):
-            box = list()
-            for x in range(box_size*(int1-1),box_size*int1):
-                for y in range(box_size*(int2-1),box_size*int2):
-                    try: 
-                        box.append(map[x,y])
-                    except KeyError:
-                        pass
-            if box:
-                av = average(box)
-                for x in range(box_size*(int1-1),box_size*int1):
-                    for y in range(box_size*(int2-1),box_size*int2):
-                        try:             
-                            percentile = get_percentile(box,map[x,y])
-                            cluster = linear_rescale(0,1,1/mod_c,1*mod_c/3,percentile)
-                            map1[x,y] *= cluster
-                        except KeyError: 
-                            pass  
-    return map1
-
-def aggregrate (map,r=5,steps=1,mod=0.5):
+def aggregrate (map,r=4,steps=3):
     t_map = map.copy()
     xrs = set()
     for x in range(r):
@@ -263,14 +242,15 @@ def aggregrate (map,r=5,steps=1,mod=0.5):
             s1 = 0
             for (dx,dy) in pil:
                 s1 += map[dx,dy]
+            ave = s1/pl
             s2 = 0
             for (dx,dy) in pil:
-                a = map[dx,dy]*pl/s1
-                b = 1/(1+math.e**(-3*a+3))
-                s2 += map[dx,dy]*b
-            t_map[x,y] = map[x,y]**2*pl/s2
+                mod = rampfunc(0.33,1.67,0.5,1.5,map[dx,dy]/ave)
+                s2 += map[dx,dy]*mod
+            mod = rampfunc(0.33,1.67,0.5,1.5,map[x,y]/ave)
+            t_map[x,y] = map[x,y]*mod*s1/s2                     
         map = t_map.copy()
-        write_to_chart(map,200,200,"agg"+str(i+1)+".csv")
+        print(map)
     return map
     
    
