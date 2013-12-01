@@ -150,7 +150,7 @@ def rampfunc (x1,x2,y1,y2,x):
         y = m*x+b
         return y
     elif x1>x: return y1
-    elif x<x2: return y2
+    elif x>x2: return y2
 
 def linear_rescale (x1,x2,y1,y2,x):
     '''
