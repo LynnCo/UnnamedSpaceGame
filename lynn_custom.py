@@ -243,7 +243,7 @@ def aggregrate_v2 (map,width,height,mod_c=5):
                             pass  
     return map1
 
-def aggregrate (map,r=5,steps=3,mod=0.5):
+def aggregrate (map,r=5,steps=1,mod=0.5):
     t_map = map.copy()
     xrs = set()
     for x in range(r):
@@ -257,18 +257,18 @@ def aggregrate (map,r=5,steps=3,mod=0.5):
         for (x,y) in map.keys():
             pil = list()
             for (dx,dy) in xrs:
-                try: map[(x+dx,y+dy)];pil.append((x+dx,y+dy))
+                try: map[x+dx,y+dy];pil.append((x+dx,y+dy))
                 except KeyError: pass
             pl = len(pil)
             s1 = 0
             for (dx,dy) in pil:
-                s1 += map[(dx,dy)]
+                s1 += map[dx,dy]
             s2 = 0
             for (dx,dy) in pil:
-                a = map[(dx,dy)]*pl/s1
+                a = map[dx,dy]*pl/s1
                 b = 1/(1+math.e**(-3*a+3))
-                s2 += map[(dx,dy)]*b
-            t_map[(x,y)] = map[(x,y)]**2*pl/s2
+                s2 += map[dx,dy]*b
+            t_map[x,y] = map[x,y]**2*pl/s2
         map = t_map.copy()
         write_to_chart(map,200,200,"agg"+str(i+1)+".csv")
     return map
