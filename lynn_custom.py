@@ -222,8 +222,10 @@ def sqr_av (r,map,mod=0.5):
         local.clear
     return t_map
 
-def aggregrate (map,r=4,steps=3):
+def aggregrate (map,r=5,steps=3):
     t_map = map.copy()
+    def modify (num):
+        return rampfunc(0,1.3,0.5,1.3,num)
     xrs = set()
     for x in range(r):
         for y in range(r):
@@ -245,9 +247,9 @@ def aggregrate (map,r=4,steps=3):
             ave = s1/pl
             s2 = 0
             for (dx,dy) in pil:
-                mod = rampfunc(0.33,1.67,0.5,1.5,map[dx,dy]/ave)
+                mod = modify(map[dx,dy]/ave)
                 s2 += map[dx,dy]*mod
-            mod = rampfunc(0.33,1.67,0.5,1.5,map[x,y]/ave)
+            mod = modify(map[x,y]/ave)
             t_map[x,y] = map[x,y]*mod*s1/s2                     
         map = t_map.copy()
         print(map)
