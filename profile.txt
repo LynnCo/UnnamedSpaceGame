@@ -1,0 +1,150 @@
+         608245 function calls (608185 primitive calls) in 4.281 seconds
+
+   Ordered by: cumulative time
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+      5/1    0.000    0.000    4.281    4.281 {built-in method exec}
+        1    0.033    0.033    4.281    4.281 test.py:1(<module>)
+        1    2.969    2.969    4.088    4.088 lynn_custom.py:216(aggregrate)
+   563206    1.095    0.000    1.095    0.000 lynn_custom.py:212(ramp)
+      9/1    0.000    0.000    0.099    0.099 <frozen importlib._bootstrap>:1559(_find_and_load)
+      9/1    0.000    0.000    0.099    0.099 <frozen importlib._bootstrap>:1509(_find_and_load_unlocked)
+     21/1    0.000    0.000    0.098    0.098 <frozen importlib._bootstrap>:581(_check_name_wrapper)
+      4/1    0.000    0.000    0.098    0.098 <frozen importlib._bootstrap>:1019(load_module)
+      4/1    0.000    0.000    0.098    0.098 <frozen importlib._bootstrap>:997(load_module)
+      4/1    0.000    0.000    0.098    0.098 <frozen importlib._bootstrap>:536(module_for_loader_wrapper)
+      4/1    0.000    0.000    0.098    0.098 <frozen importlib._bootstrap>:850(_load_module)
+        4    0.000    0.000    0.085    0.021 <frozen importlib._bootstrap>:935(get_code)
+     10/2    0.000    0.000    0.068    0.034 <frozen importlib._bootstrap>:305(_call_with_frames_removed)
+     7225    0.047    0.000    0.060    0.000 random.py:530(gauss)
+        1    0.048    0.048    0.048    0.048 {built-in method compile}
+        1    0.000    0.000    0.029    0.029 <frozen importlib._bootstrap>:1046(_cache_bytecode)
+        1    0.000    0.000    0.028    0.028 <frozen importlib._bootstrap>:1057(set_data)
+        1    0.024    0.024    0.028    0.028 <frozen importlib._bootstrap>:121(_write_atomic)
+        1    0.000    0.000    0.020    0.020 lynn_custom.py:12(<module>)
+        1    0.000    0.000    0.008    0.008 random.py:37(<module>)
+       85    0.007    0.000    0.007    0.000 lynn_custom.py:235(stepx)
+        9    0.000    0.000    0.007    0.001 <frozen importlib._bootstrap>:1473(_find_module)
+       87    0.005    0.000    0.005    0.000 {method 'copy' of 'dict' objects}
+        5    0.000    0.000    0.005    0.001 <frozen importlib._bootstrap>:1305(find_module)
+        5    0.000    0.000    0.005    0.001 <frozen importlib._bootstrap>:1278(_get_loader)
+        3    0.005    0.002    0.005    0.002 {built-in method loads}
+       16    0.001    0.000    0.004    0.000 <frozen importlib._bootstrap>:1352(find_loader)
+        1    0.000    0.000    0.004    0.004 hashlib.py:53(<module>)
+     3615    0.004    0.000    0.004    0.000 {built-in method log}
+        5    0.000    0.000    0.004    0.001 <frozen importlib._bootstrap>:496(set_package_wrapper)
+        5    0.000    0.000    0.004    0.001 <frozen importlib._bootstrap>:509(set_loader_wrapper)
+        1    0.003    0.003    0.003    0.003 lynn_custom.py:233(<listcomp>)
+       27    0.003    0.000    0.003    0.000 {built-in method stat}
+     7234    0.003    0.000    0.003    0.000 {built-in method len}
+     7225    0.003    0.000    0.003    0.000 {method 'values' of 'dict' objects}
+     3613    0.003    0.000    0.003    0.000 {built-in method cos}
+        1    0.000    0.000    0.003    0.003 <frozen importlib._bootstrap>:1126(load_module)
+     7226    0.003    0.000    0.003    0.000 {method 'random' of '_random.Random' objects}
+        1    0.003    0.003    0.003    0.003 {built-in method load_dynamic}
+     3613    0.002    0.000    0.002    0.000 {built-in method sin}
+     3614    0.002    0.000    0.002    0.000 {built-in method sqrt}
+        5    0.001    0.000    0.002    0.000 <frozen importlib._bootstrap>:1031(get_data)
+        1    0.002    0.002    0.002    0.002 {built-in method replace}
+        1    0.002    0.002    0.002    0.002 {built-in method open}
+        1    0.000    0.000    0.001    0.001 csv.py:4(<module>)
+       61    0.001    0.000    0.001    0.000 <frozen importlib._bootstrap>:74(_path_join)
+       10    0.001    0.000    0.001    0.000 {built-in method __build_class__}
+        5    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:776(find_module)
+        5    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:761(_search_registry)
+        1    0.001    0.001    0.001    0.001 lynn_custom.py:234(<listcomp>)
+        4    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:593(_requires_builtin_wrapper)
+        1    0.001    0.001    0.001    0.001 lynn_custom.py:229(<listcomp>)
+        4    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:654(load_module)
+        1    0.001    0.001    0.001    0.001 lynn_custom.py:230(<listcomp>)
+        6    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:98(_path_is_mode_type)
+        4    0.001    0.000    0.001    0.000 {built-in method init_builtin}
+        5    0.001    0.000    0.001    0.000 {method 'read' of '_io.FileIO' objects}
+        5    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:754(_open_registry)
+        5    0.000    0.000    0.001    0.000 <frozen importlib._bootstrap>:108(_path_isfile)
+       10    0.001    0.000    0.001    0.000 {built-in method OpenKey}
+        8    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:415(cache_from_source)
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1041(path_stats)
+        9    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:266(_get_module_lock)
+        1    0.000    0.000    0.000    0.000 {built-in method dumps}
+        8    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:796(is_package)
+       18    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:86(_path_split)
+        1    0.000    0.000    0.000    0.000 {method 'write' of '_io.FileIO' objects}
+       60    0.000    0.000    0.000    0.000 {method 'format' of 'str' objects}
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:804(_bytes_from_bytecode)
+        9    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:181(__init__)
+       73    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:486(_verbose_message)
+       49    0.000    0.000    0.000    0.000 {built-in method hasattr}
+      268    0.000    0.000    0.000    0.000 {method 'append' of 'list' objects}
+        9    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:201(acquire)
+        9    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:226(release)
+        1    0.000    0.000    0.000    0.000 random.py:84(__init__)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:114(_path_isdir)
+        1    0.000    0.000    0.000    0.000 random.py:93(seed)
+       18    0.000    0.000    0.000    0.000 {built-in method allocate_lock}
+        4    0.000    0.000    0.000    0.000 {method 'find_loader' of 'zipimport.zipimporter' objects}
+       69    0.000    0.000    0.000    0.000 {method 'join' of 'str' objects}
+        9    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:643(find_module)
+      104    0.000    0.000    0.000    0.000 {method 'add' of 'set' objects}
+       64    0.000    0.000    0.000    0.000 {method 'rpartition' of 'str' objects}
+       36    0.000    0.000    0.000    0.000 {built-in method hypot}
+        3    0.000    0.000    0.000    0.000 {built-in method register_dialect}
+        6    0.000    0.000    0.000    0.000 hashlib.py:94(__get_openssl_constructor)
+        1    0.000    0.000    0.000    0.000 lynn_custom.py:228(<listcomp>)
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1144(is_package)
+       24    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1261(_path_importer_cache)
+       24    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1459(__exit__)
+       24    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1455(__enter__)
+        1    0.000    0.000    0.000    0.000 lynn_custom.py:232(<listcomp>)
+       10    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1596(_handle_fromlist)
+        9    0.000    0.000    0.000    0.000 {built-in method is_builtin}
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:45(_w_long)
+        1    0.000    0.000    0.000    0.000 random.py:68(Random)
+        8    0.000    0.000    0.000    0.000 {method 'rsplit' of 'str' objects}
+        7    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:61(_r_long)
+        1    0.000    0.000    0.000    0.000 {function Random.seed at 0x00000000026AF1E0}
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:154(new_module)
+       16    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:34(_relax_case)
+       28    0.000    0.000    0.000    0.000 {built-in method isinstance}
+        1    0.000    0.000    0.000    0.000 csv.py:79(DictReader)
+        5    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:700(find_module)
+        4    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1013(__init__)
+       20    0.000    0.000    0.000    0.000 {built-in method getattr}
+       33    0.000    0.000    0.000    0.000 {built-in method release_lock}
+        1    0.000    0.000    0.000    0.000 {built-in method urandom}
+        3    0.000    0.000    0.000    0.000 {method 'extend' of 'bytearray' objects}
+       24    0.000    0.000    0.000    0.000 {built-in method acquire_lock}
+        8    0.000    0.000    0.000    0.000 {method 'partition' of 'str' objects}
+       16    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1026(get_filename)
+       18    0.000    0.000    0.000    0.000 {built-in method get_ident}
+        1    0.000    0.000    0.000    0.000 {built-in method exp}
+        1    0.000    0.000    0.000    0.000 {built-in method any}
+        9    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:280(cb)
+        1    0.000    0.000    0.000    0.000 {method 'union' of 'set' objects}
+        5    0.000    0.000    0.000    0.000 {built-in method is_frozen}
+        1    0.000    0.000    0.000    0.000 random.py:623(SystemRandom)
+        3    0.000    0.000    0.000    0.000 {built-in method _fix_co_filename}
+        1    0.000    0.000    0.000    0.000 csv.py:22(Dialect)
+       15    0.000    0.000    0.000    0.000 {method 'extend' of 'list' objects}
+        1    0.000    0.000    0.000    0.000 csv.py:167(Sniffer)
+        1    0.000    0.000    0.000    0.000 lynn_custom.py:274(clusters)
+        1    0.000    0.000    0.000    0.000 csv.py:129(DictWriter)
+        2    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1147(<genexpr>)
+        1    0.000    0.000    0.000    0.000 {method 'setter' of 'property' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method openssl_md5}
+        1    0.000    0.000    0.000    0.000 csv.py:53(excel)
+        4    0.000    0.000    0.000    0.000 {method 'get' of 'dict' objects}
+        1    0.000    0.000    0.000    0.000 <frozen importlib._bootstrap>:1122(__init__)
+        1    0.000    0.000    0.000    0.000 csv.py:68(unix_dialect)
+        1    0.000    0.000    0.000    0.000 {built-in method from_bytes}
+        1    0.000    0.000    0.000    0.000 csv.py:63(excel_tab)
+        1    0.000    0.000    0.000    0.000 {built-in method openssl_sha256}
+        6    0.000    0.000    0.000    0.000 {built-in method globals}
+        1    0.000    0.000    0.000    0.000 {built-in method openssl_sha512}
+        1    0.000    0.000    0.000    0.000 {built-in method openssl_sha224}
+        1    0.000    0.000    0.000    0.000 {built-in method openssl_sha384}
+        1    0.000    0.000    0.000    0.000 {built-in method openssl_sha1}
+        1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
+        1    0.000    0.000    0.000    0.000 {built-in method id}
+
+

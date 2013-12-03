@@ -9,18 +9,13 @@
 #standard deviation
 #oscillator
 #significant figures rounder
-
 import math
 import random
 import time
 import csv
-
-
-
-# I/O
-
-
-
+#######
+# I/O #
+#######
 def write_to_chart (collection,h,v,filename):
     '''
     input: dictionary [x,y]=val or list [(x,y),(x,y)...], horizontal, verticle, your_file.csv
@@ -45,13 +40,9 @@ def write_to_chart (collection,h,v,filename):
                 row.clear
         else:
             print("Invalid type")
-
-            
-            
-#DICTIONARIES
-            
-            
-            
+################    
+# DICTIONARIES #
+################            
 def xydictsort (dic):
     '''
     input: dict[x,y]
@@ -62,7 +53,6 @@ def xydictsort (dic):
         dlist.append((x,y))
     dlist.sort()
     return dlist
-    
 def y_dict_sort (dic):
     '''
     sorts a dictionary by its values
@@ -77,8 +67,7 @@ def y_dict_sort (dic):
     out = list()
     for (a,b) in dlist:
         out.append(b)
-    return out
-            
+    return out            
 def values_to_list (dic):
     '''not sure that I even need this'''
     v_list = list()
@@ -93,8 +82,7 @@ def values_to_list (dic):
     
     
 #def sig_figs (val,figs):
-    #return rounded_v
-    
+    #return rounded_v   
 def st_dev (values):
     '''standard deviation'''
     sum = 0
@@ -144,7 +132,7 @@ def dist_2d (x1,y1,x2,y2):
     
 def rampfunc (x1,x2,y1,y2,x):
     '''applies a ramp function'''
-    if x1<=inp<=x2:
+    if x1<=x<=x2:
         m = (y1-y2)/(x1-x2)
         b = y1 - m*x1
         y = m*x+b
@@ -221,39 +209,62 @@ def sqr_av (r,map,mod=0.5):
         t_map[x,y] = map[x,y] + diff
         local.clear
     return t_map
-
-def aggregrate (map,r=5,steps=3):
-    t_map = map.copy()
-    def modify (num):
-        return rampfunc(0,1.3,0.5,1.3,num)
+def ramp(x):
+    if 0<=x<=1.3:return 0.615*x+0.5
+    elif 0>x: return 0.5
+    elif x>1.3: return 1.3
+def aggregrate (grid,grid_x,grid_y,r=5):
+    t_grid = grid.copy()
     xrs = set()
-    for x in range(r):
-        for y in range(r):
-            if math.hypot(x,y)<r:
+    for x in range(r+1):
+        for y in range(r+1):
+            if math.hypot(x,y)<=r:
                 xrs.add((x,y))
                 xrs.add((-x,y))
                 xrs.add((x,-y))
                 xrs.add((-x,-y))
-    for i in range(steps):
-        for (x,y) in map.keys():
-            pil = list()
-            for (dx,dy) in xrs:
-                try: map[x+dx,y+dy];pil.append((x+dx,y+dy))
-                except KeyError: pass
+    xrs = list(xrs)
+    #
+    ystp = [(x,y+1) for (x,y) in xrs]
+    yal = [p for p in ystp if p not in xrs]
+    yrl = [p for p in xrs if p not in ystp]
+    #
+    xstp = [(x+1,y) for (x,y) in xrs]
+    xal = [p for p in xstp if p not in xrs]
+    xrl = [p for p in xrs if p not in xstp]
+    #
+    pil = dict()
+    for (dx,dy) in xrs:
+        try: pil[dx,dy] = grid[dx,dy]
+        except KeyError: pass
+    for x in range(grid_x):
+        xil = pil.copy()
+        for y in range(grid_y):
             pl = len(pil)
             s1 = 0
-            for (dx,dy) in pil:
-                s1 += map[dx,dy]
+            for v in pil.values(): s1+=v
             ave = s1/pl
             s2 = 0
-            for (dx,dy) in pil:
-                mod = modify(map[dx,dy]/ave)
-                s2 += map[dx,dy]*mod
-            mod = modify(map[x,y]/ave)
-            t_map[x,y] = map[x,y]*mod*s1/s2                     
-        map = t_map.copy()
-        print(map)
-    return map
+            for (dx,dy) in pil: s2+=grid[dx,dy]*ramp(grid[dx,dy]/ave)
+            t_grid[x,y] = grid[x,y]*ramp(grid[x,y]/ave)*s1/s2
+            #step y
+            for px,py in yrl:
+                try: del pil[x+px,y+py]
+                except KeyError: pass
+            for px,py in yal:
+                try: pil[x+px,y+py] = grid[x+px,y+py]
+                except KeyError: pass
+        #step x
+        for px,py in xrl:
+            try: del xil[x+px,py]
+            except KeyError: pass
+        for px,py in xal:
+            try: xil[x+px,py] = grid[x+px,py]
+            except KeyError: pass
+        pil = xil.copy()
+    print("count: ",count)
+    grid = t_grid.copy()
+    return grid
     
    
 
