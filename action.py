@@ -9,6 +9,11 @@
 import galaxy as gal
 import ship_state as ship
 
+class pull_available (object):
+    def __init__ (self):
+        pass
+    
+
 class do (object):
     '''
     pulls how influential the particular events are going to be

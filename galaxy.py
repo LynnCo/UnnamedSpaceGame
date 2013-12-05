@@ -19,8 +19,8 @@ class galaxy_gen (object):
     map = list()
     def __init__ (self):
         gg = galaxy_gen
-        gg.h = 150
-        gg.v = 50
+        gg.h = 100
+        gg.v = 100
         for x in range(gg.h):
             for y in range(gg.v):
                 gg.map.append((x,y))
@@ -37,42 +37,33 @@ class element_gen (object):
     l_ave=0;l_dev=0;n_ave=0;n_dev=0;h_ave=0;h_dev=0;e_ave=0;e_dev=0
     def __init__ (self):
         eg = element_gen
-        #generates eg.lights
-        #distribution: 50 +- 25
+        #lights 50 +- 25
         for (x,y) in galaxy_gen.map: 
-            eg.lights[x,y] = random.randint(10,90)
+            eg.lights[x,y] = random.gauss(50,25)
         for (x,y) in eg.lights.keys():
             if eg.lights[x,y]<0: eg.lights[x,y]=0
         eg.l_ave = LC.average(eg.lights.values())
         eg.l_dev = LC.st_dev(eg.lights.values())
-        #generates eg.normals
-        #distribution: 30 +- 10
+        #normals 30 +- 10
         for (x,y) in galaxy_gen.map:
-            if eg.lights[x,y]>eg.l_ave-eg.l_dev:
-                eg.normals[x,y] = random.gauss(85,22)
-        eg.normals = LC.aggregrate(eg.normals,5,3)
+            if eg.lights[x,y]>eg.l_ave-eg.l_dev*0.8:
+                eg.normals[x,y] = random.gauss(30,10)
         for (x,y) in eg.normals.keys():
             if eg.normals[x,y]<0: eg.normals[x,y]=0
         eg.n_ave = LC.average(eg.normals.values())
         eg.n_dev = LC.st_dev(eg.normals.values()) 
-        #generates eg.heavies
-        #distrition: 20 +- 5
+        #heavies 25 +- 5
         for (x,y) in eg.normals.keys():
-            if eg.normals[x,y]>eg.n_ave-eg.n_dev:
-                eg.heavies[x,y] = (2*eg.normals[x,y] + eg.lights[x,y])*0.45
-        #clustering
-        #eg.heavies = LC.aggregrate(3,eg.heavies,3,3)
+            if eg.normals[x,y]>eg.n_ave-eg.n_dev*0.8:
+                eg.heavies[x,y] = (2*eg.normals[x,y] + eg.lights[x,y])*0.2
         for (x,y) in eg.heavies.keys():
             if eg.heavies[x,y]<0: eg.heavies[x,y]=0
         eg.h_ave = LC.average(eg.heavies.values())
         eg.h_dev = LC.st_dev(eg.heavies.values())
-        #generates eg.exotics
-        #distribution: 2.5 +- 1.5
+        #exotics 2.5 +- 1.5
         for (x,y) in eg.heavies.keys():
-            if eg.heavies[x,y]>eg.h_ave-eg.h_dev:
-                eg.exotics[x,y] = random.gauss(5,1)
-        #drop off significantly at the edge
-        #eg.exotics = LC.aggregrate(4,eg.exotics,10,10)
+            if eg.heavies[x,y]>eg.h_ave-eg.h_dev*0.8:
+                eg.exotics[x,y] = random.gauss(2.5,1.5)
         for (x,y) in eg.exotics.keys():
             if eg.exotics[x,y]<0: eg.exotics[x,y]=0
         eg.e_ave = LC.average(eg.exotics.values())
@@ -82,10 +73,10 @@ class element_gen (object):
         # LC.write_to_chart(normals,50,150,"normals.csv")
         # LC.write_to_chart(heavies,50,150,"heavies.csv")
         # LC.write_to_chart(exotics,50,150,"exotics.csv")
-        # print("lights");print(round(l_ave,0));print(round(l_dev,0));print(len(lights));print()
-        # print("normals");print(round(n_ave,0));print(round(n_dev,0));print(len(normals));print()
-        # print("heavies");print(round(h_ave,0));print(round(h_dev,1));print(len(heavies));print()
-        # print("exotics");print(round(e_ave,1));print(round(e_dev,1));print(len(exotics));print()
+        print("lights");print(round(eg.l_ave,0));print(round(eg.l_dev,0));print(len(eg.lights));print()
+        print("normals");print(round(eg.n_ave,0));print(round(eg.n_dev,0));print(len(eg.normals));print()
+        print("heavies");print(round(eg.h_ave,0));print(round(eg.h_dev,1));print(len(eg.heavies));print()
+        print("exotics");print(round(eg.e_ave,1));print(round(eg.e_dev,1));print(len(eg.exotics));print()
 #places stars
 class star_gen (object):
     #element dictionaries. all scaled to the lights average
@@ -109,7 +100,7 @@ class star_gen (object):
             #get (stellar) sg.mass
             sg.mass[x,y] = sg.l_s[x,y]+sg.n_s[x,y]+sg.h_s[x,y]
         #if you have above (ratio) sg.mass in that location
-        bot = LC.percentile(LC.values_to_list(sg.mass),0.87)
+        bot = LC.percentile(LC.values_to_list(sg.mass),0.9)
         #flag area for star placement
         flag = dict()
         for (x,y) in galaxy_gen.map:
@@ -123,8 +114,8 @@ class star_gen (object):
                 #and if they are all not too close
                 for (a,b) in sg.map:
                     #closeness takes into account both s(ize) and d(istance) fac(tors) 
-                    d_fac = LC.linear_rescale(1,15,2,0,LC.dist_2d(x,y,a,b))
-                    s_fac = LC.linear_rescale(320,530,0,1,sg.mass[x,y]+sg.mass[a,b])
+                    d_fac = -0.143*math.hypot(x-a,y-b)+2.14
+                    s_fac = 0.00476*(sg.mass[x,y]+sg.mass[a,b])-1.52
                     if (d_fac*s_fac<0.63): not_too_close = 1
                     else:not_too_close=0;break
                 if not_too_close:sg.map.append((x,y));stars+=1
@@ -151,11 +142,11 @@ class system_gen (object):
         #mass. used for calculations. 210 +- 10
         for (x,y) in star_gen.map: syg.mass[x,y] = star_gen.mass[x,y] 
         #real_mass. used for display. 50 +- 25
-        for (x,y) in star_gen.map: syg.real_mass[x,y] = 100*round(LC.linear_rescale(180,230,0,100,syg.mass[x,y]),1)
+        for (x,y) in star_gen.map: syg.real_mass[x,y] = 100*round(2*syg.mass[x,y]-360,1)
         #luminosity. 50 +- 25
         for (x,y) in star_gen.map:
             score = star_gen.e_s[x,y] + syg.mass[x,y]
-            score = LC.linear_rescale(215,295,0,100,score)
+            score = 1.25*score-268.75
             if (score < 0): score = 0
             if (score > 100): score = 100
             syg.luminosity[x,y] = score
@@ -163,14 +154,14 @@ class system_gen (object):
         for (x,y) in star_gen.map:
             v1 = star_gen.n_s[x,y];v2 = star_gen.h_s[x,y];v3 = syg.mass[x,y]
             score = v1+v2+0.25*v3
-            score = math.floor(LC.linear_rescale(148,212,0,10,score))
+            score = math.floor(0.156*score-23.1)
             if (score < 0): score = 0
             syg.planets[x,y] = score
         #asteroids. 50 +- 25
         for (x,y) in star_gen.map:
             v1 = star_gen.n_s[x,y];v2 = star_gen.h_s[x,y]
             score = 0.5*v1+1.5*v2
-            score = LC.linear_rescale(110,155,0,100,score)
+            score = 2.22*score-244
             if (score > 100): score = 100
             elif (score < 1): score = 1
             syg.asteroids[x,y] = score
@@ -178,13 +169,13 @@ class system_gen (object):
         for (x,y) in star_gen.map:
             v1 = star_gen.l_s[x,y];v2 = syg.mass[x,y]
             score = v1+0.1*v2
-            score = LC.linear_rescale(75,125,0,100,score)
+            score = 2*score-150
             if (score > 100): score = 100
             elif (score < 1): score = 1
             syg.gas[x,y] = score
         #mine_yield. 5 +- 2.5
         for (x,y) in star_gen.map:
-            score = math.floor(LC.linear_rescale(50,80,0,10,star_gen.h_s[x,y]))
+            score = math.floor(0.333*star_gen.h_s[x,y]-16.7)
             if (score > 10): score = 10
             elif (score < 1): score = 1    
             syg.mine_yield[x,y] = score
@@ -192,7 +183,7 @@ class system_gen (object):
         for (x,y) in star_gen.map:
             v1 = star_gen.e_s[x,y];v2 = syg.luminosity[x,y]
             score = v1+v2
-            score = math.floor(LC.linear_rescale(10,180,0,10,score))
+            score = math.floor(0.0588*score-0.588)
             if (score > 10): score = 10
             elif (score < 1): score = 1
             syg.radiation[x,y] = score
@@ -200,7 +191,7 @@ class system_gen (object):
         for (x,y) in star_gen.map:
             v1 = syg.mass[x,y];v2 = syg.planets[x,y];v3 = syg.asteroids[x,y]
             score = v1+10*v2+0.3*v3
-            score = math.floor(LC.linear_rescale(200,330,0,10,score))
+            score = math.floor(0.0769*score-15.4)
             if (score > 10): score = 10
             elif (score < 1): score = 1
             syg.gravity_disrupt[x,y] = score
@@ -313,7 +304,7 @@ class constellation_gen (object):
     def __init__ (self):
         cg = constellation_gen
         #gets your core name
-        tagcodes = LC.clusters(star_gen.map,8,20)
+        tagcodes = LC.clusters(star_gen.map,10,20)
         name_list = ["Sideritte","Corvus","Cancer","Lux","Crux","Altoic","Gemini","Gaunt","Sagittarius","Antila","Aries","Aquarius","Argo Navis","Orion","Perseus","Syndra","Karma","Andromeda","Buex","Coma Berenices","Sanctum","Sol","Centauri","Targus","Lynx","Erite","Volaran","Prospero Magus","Aluna Borealis"]
         cg.core_name = tagcodes.namer(name_list)
         #assigns centers
@@ -409,7 +400,7 @@ class constellation_gen (object):
             o = constellation_gen.center[other]
             t = constellation_gen.center[this]
             if not other==this:
-                range_to[other] = LC.dist_2d(o[0],o[1],t[0],t[1])
+                range_to[other] = math.hypot(o[0]-t[0],o[1]-t[1])
         #get the closest "constellation"
         range_list = LC.y_dict_sort(range_to)
         closest = range_list[0]
@@ -432,7 +423,7 @@ class constellation_gen (object):
         for (const_i,c) in constellation_gen.center.items():
             sum_diff = 0
             for loc in constellation_gen.core_name[const_i]:
-                sum_diff += LC.dist_2d(c[0],c[1],loc[0],loc[1])
+                sum_diff += math.hypot(c[0]-loc[0],c[1]-loc[1])
             range_to[const_i] = sum_diff/constellation_gen.size[const_i]
         range_list = LC.y_dict_sort(range_to)
         if (this==range_list[0]):assign = 1
@@ -444,7 +435,7 @@ class constellation_gen (object):
         for (const_i,c) in constellation_gen.center.items():
             sum_diff = 0
             for loc in constellation_gen.core_name[const_i]:
-                sum_diff += LC.dist_2d(c[0],c[1],loc[0],loc[1])
+                sum_diff += math.hypot(c[0]-loc[0],c[1]-loc[1])
             range_to[const_i] = sum_diff/constellation_gen.size[const_i]
         range_list = LC.y_dict_sort(range_to)
         #the only difference from dense()
@@ -508,7 +499,7 @@ class cosmetic (object):
             const_i = cgic[x,y]
             sum_diff = 0
             for loc in cgcn[const_i]:
-                sum_diff += LC.dist_2d(cgc[const_i][0],cgc[const_i][1],loc[0],loc[1])
+                sum_diff += math.hypot(cgc[const_i][0]-loc[0],cgc[const_i][1]-loc[1])
             c = sum_diff/cgs[const_i]*100/8
             e = star_gen.e_s[x,y]*50/40
             m = star_gen.mass[x,y]*10/2

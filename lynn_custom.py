@@ -148,6 +148,7 @@ def linear_rescale (x1,x2,y1,y2,x):
     m = (y1-y2)/(x1-x2)
     b = y1 - m*x1
     y = m*x+b
+    #print(x1,x2,y1,y2," m ",m," b ",b)
     return y
 
 def linear_eq (x1,y1,x2,y2):
