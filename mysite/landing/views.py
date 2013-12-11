@@ -1,10 +1,13 @@
+import os
 from django.shortcuts import render
 from django.http import HttpResponse
-
-# Create your views here.
 def index(request):
-    context = {"get_food": "candy"}
-    return render(request,"landing/index.html", context)
+    url = "landing/static/landing/story.txt"
+    with open(url,"r") as story:
+        content = story.readlines()
+    content = [line.strip() for line in content]
+    err = "none"
+    return render(request,"landing/index.html", {"words":content[0],"err":err})
 def test(request,inp):
     return HttpResponse("Your input was %s" %(inp))
 def empty(request):
