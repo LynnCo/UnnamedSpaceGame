@@ -532,9 +532,62 @@ class cosmetic (object):
             cosmetic.star_name[x,y] = name
 #late term things
 class developement (object):
-    def __init__(self):
-        pass
+    extras = dict()
+    planet_names = dict()
+    bio = dict()
+    def __init__ (self):
+        developement = dv
+        #bio
+        #planet types
+        #extras
+        gc = 0
+        ac = 0
+        cc = 0
+        hc = 0
+        for coords in star_gen.map:
+            dv.extras[coords] = list()
+            if dv.gas_cloud(coords):
+                dv.extras[coords].append("gas cloud")
+                gc += 1
+            if dv.asteroid_belt(coords):
+                dv.extras[coords].append("asteroid belt")
+                ac += 1
+            if dv.comets(coords):
+                dv.extras[coords].append("comets")
+                cc += 1
+            if dv.hostile_colony(coords):
+                dv.extras[coords].append("hostile colony")
+                hc += 1
+        print(gc," gas clouds")
+        print(ac," asteroid belts")
+        print(cc," comets")
+        print(hc," hostile colonies")
+    def gas_cloud (coords):
+        gas = system_gen.gas(coords)>0.7
+        pla = system_gen.planets(coords)<5
+        if gas and pla:
+            return 1
+        else:
+            return 0
+    def asteroid_belt (coords):
+        ast = system_gen.asteroids(coords)>0.7
+        pla = system_gen.planets(coords)>4
+        if ast and pla:
+            return 1
+        else:
+            return 0
+    def comets (coords):
+        ast = system_gen.asteroids(coords)>0.8
+        lum = system_gen.luminosity(coords)>0.8
+        pla = system_gen.planets(coords)>5
+        if ast and lum and pla:
+            return 1
+        else:
+            return 0
+    def hostile_colony (coords):
+        return 0
 #all the things you'd ever need
+#galaxy.get.thing()
 class get (object):
     def mass(x,y):return system_gen.real_mass[x,y]
     def luminosity(x,y):return system_gen.luminosity[x,y]
