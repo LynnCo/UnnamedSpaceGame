@@ -533,8 +533,6 @@ class cosmetic (object):
 #late term things
 class developement (object):
     extras = dict()
-    planet_names = dict()
-    bio = dict()
     def __init__ (self):
         developement = dv
         #bio
@@ -586,6 +584,129 @@ class developement (object):
             return 0
     def hostile_colony (coords):
         return 0
+    #inner outer
+    h_list = list()
+    n_list = list()
+    def planets (star):
+    return range(system_gen.planets[star]+1)
+    for star in star_gen.map():
+        h_list.append(element_gen.heavies[star])
+        n_list.append(element_gen.normals[star])
+    have = LC.average(h_list)
+    nave = LC.average(n_list)
+    hdev = LC.st_dev(h_list)
+    ndev = LC.st_dev(n_list)
+    low = (have - 2*hdev) / (nave + 2*ndev)
+    hi = (have + 2*hdev) / (nave - 2*ndev)
+    def pin (x):
+        return (x-low)/(hi-low)
+    io = dict()
+    inners = dict()
+    for star in star_gen.map():
+        io[star] = dict()
+        inners[star] = 0
+        x = element_gen.heavies[star]/element_gen.normals[star]
+        bound = pin(x)
+        for planet in planets(star):
+            roll = random.randint(0,100)
+            if roll<bound:
+                inners[star] += 1
+                io[star][planet] = "inner"
+            if roll>=bound:
+                io[star][planet] = "outer"
+    #planet mass
+    innscale = 100
+    outscale = 5000
+    def get_mass (star,type):
+        n = [element_gen.normals[star]
+        if type == "inner":
+            h = element_gen.heavies[star]
+            fac = [innscale*n,innscale*0.5*h]
+        elif type == "outer":
+            l = element_gen.lights[stars]
+            fac = [outscale*n,outscale*10*l]
+        else:
+            print("err_io_type")
+        return min(fac)
+    pmass = dict()
+    for star in star_gen.map():
+        pmass[star] = dict()
+        for planet in planets(star):
+            pmass[star][planet] = get_mass(star,io[star][planet])
+    #planet temperature
+    ptemp = dict()
+    def toz (x):
+        if x<0: return 0
+        else: return x
+    def toh (x):
+        if x>100: return 100
+        else: return x
+    lumlist = list()
+    for star in star_gen.map():
+        lumlist.append(system_gen.luminosity[star])
+    ldev = LC.st_dev(lumlist)
+    for star in star_gen.map():
+        ptemp[star] = dict()
+        llw = toz(system_gen.luminosity[star] - ldev)
+        lhi = toh(system_gen.luminosity[star] + ldev)
+        interval = (lhi - llw) / (system_gen.planets[star]+1)
+        for planet in planets(star):
+            tempi = llw + interval * planet
+            if tempi < 35: ptemp[star][planet] = "T1"
+            elif 35 <= tempi <= 65: ptemp[star][planet] = "T2"
+            elif 65 < tempi: ptemp[star][planet] = "T3"
+            else: print("err_temp_tier")
+    #bio score
+    def get_lmod (star):
+        lum = system_gen.luminosity[star]
+        if 15 <= lum <= 50: return (lum/35) - (3/7)
+        elif 50 < lum <= 85: return -(lum/35) - (17/7)
+        else: return 0
+    bio_score = dict()
+    bio_teir = dict()
+    bsl = list()
+    for star in star_gen.map():
+        bio = get_lmod(star)*element_gen.exotics[star]*inners[star]
+        bio_score[star] = bio
+        bsl.append(bio)
+    bsave = LC.st_dev(bsl)
+    bsdev = LC.st_dev(bsl)
+    def get_bio_teir (star,b):
+        bl = bsave - bsdev*0.7
+        bh = bsave + bsdev
+        if b < bl: return "B1"
+        elif bl <= b <= bh: return "B2"
+        elif bh <= b: return "B3"
+        else: return 0; print("err_bio_teir")
+    for star in star_gen.map():
+        bio_teir[star] = dict()
+        for planet in planets(star):
+            bio_teir[star][planet] = get_bio_teir(star,bio_score[star]*random.randint(7,13)/10)
+    #planet type
+    ptype = dict()
+    outermatrix = dict("T1"="planetesimal","T2"="ice giant","T3"="gas giant")
+    innermatrix = dict("B1T1"="ice","B1T2"="barren","B1T3"="lava",
+                       "B2T1"="tundra","B2T2"="rocky","B2T3"="desert",
+                       "B3T1"="ocean","B3T2"="terran","B3T3"="jungle")
+    score = dict("planetesimal"=0,"ice giant"=0,"gas giant"=0,
+                 "ice"=0,"barren"=0,"lava"=0,
+                 "tundra"=0,"rocky"=0,"desert"=0,
+                 "ocean"=0,"terran"=0,"jungle"=0)
+    count = 0
+    for star in star_gen.map():
+        ptype[star] = dict()
+        for planet in planets(star):
+            temp = ptemp[star][planet]
+            bio = bio_teir[star][planet]
+            if io[star][planet] == "outer":
+                pi = outermatrix[temp]
+            if io[star][planet] == "inner":
+                pi = innermatrix[bio+temp]
+            ptype[star][planet] = pi
+            score[pi] += 1
+            count += 1
+    for key, value in score.keys():
+        print(key," ",value/count,"%")
 #all the things you'd ever need
 #galaxy.get.thing()
 class get (object):
