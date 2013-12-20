@@ -1,7 +1,7 @@
 UnnamedSpaceGame
 ================
 
-Procedural generation based space game, built from the ground up by mi, Lynn
+Rougelike space adventure
 
 **Completion target:** Spring 2014
 
