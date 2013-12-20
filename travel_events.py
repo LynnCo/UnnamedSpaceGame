@@ -55,3 +55,44 @@ class do (object):
     
     def __init__ (self,event):
         pass 
+#travel events
+#all scale with jump time
+#check jump accuracy also???
+#
+#either dropout or
+#one of the miscal events
+#those being:
+#miscalulation, alt_pull, slingshot
+#NO WAIT
+#getting a drop out just pulls from a 
+#miscal event
+#...yea
+#
+#WAIT EVEN BETTER!!!!
+#the events are a progression of badness
+#each checking off the last
+# miscal -> alt -> sling
+#
+#in addition to a radiation event
+#rad_dose (electronics) and/or
+#rad_sickness (crew)
+def dropout ():
+    #functional effectiveness of FTL drive
+    pass
+def miscalculation ():
+    #jump dist
+    pass
+def alt_pull ():
+    #nearby star, high relative mass
+    pass
+def slingshot ():
+    #high jump velocity
+    pass
+#formerly rad_dose
+def overload ():
+    #works off sheilding
+    pass
+#formly rad_sickness
+def subspace_sickness ():
+    #sheilding, crew count
+    pass
