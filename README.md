@@ -3,9 +3,11 @@ UnnamedSpaceGame
 
 Rougelike space adventure
 
-**Completion target:** Spring 2014
+<h4>Timeline</h4>
+* Spring 2014 - demos up
+* Early Summer 2014 - core features complete
 
-**Game Flow**
+<h3>Game Flow</h3>
 
 * Journey Init, runs once at the beggining
     * intro.story
