@@ -24,8 +24,7 @@ Rougelike space adventure
 * Journey End, runs when you get to destination
 
 
-
-[story]
+<h3>Story</h3>
 
 Your people were a newly space faring race. The steady march of technology had recently turned the black abyss into a expanse one could cross, and cross it they did. Envoys were sent from and wide, in search of wealth, land,  and knowledge. Your group was of the latter, sent to a far away star that had been emitting strange frequencies. The frequencies turned out to be communication channels, and from a source that wasn't exactly welcoming.
 
