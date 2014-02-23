@@ -4,8 +4,8 @@ UnnamedSpaceGame
 Rougelike space adventure
 
 <h4>Timeline</h4>
-* Spring 2014 - demos up
-* Early Summer 2014 - core features complete
+
+IDK >_<
 
 <h3>Game Flow</h3>
 
